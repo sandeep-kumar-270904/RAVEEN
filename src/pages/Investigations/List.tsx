@@ -109,11 +109,10 @@ export default function InvestigationList() {
                   </td>
                 </tr>
               ) : (
-                // Real Data
                 filtered.map(inv => (
                   <tr 
                     key={inv.id} 
-                    className="hover:bg-raven-bg-surface-2/50 transition-colors cursor-pointer group"
+                    className="hover:bg-raven-bg-surface-2/50 transition-all duration-150 cursor-pointer group animate-in fade-in slide-in-from-bottom-2" 
                     onClick={() => navigate(`/investigations/${inv.id}`)}
                   >
                     <td className="px-5 py-3">

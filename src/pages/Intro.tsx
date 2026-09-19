@@ -11,21 +11,20 @@ export default function Intro() {
   };
 
   useEffect(() => {
-    // If already seen in this session, immediately skip to login
     if (sessionStorage.getItem('raven_intro_seen')) {
       finishIntro();
       return;
     }
 
-    // Animation timeline
     const timers = [
-      setTimeout(() => setStage(1), 500),   // Stage 1: Logo & RAVEN
-      setTimeout(() => setStage(2), 1500),  // Stage 2: Full Name
-      setTimeout(() => setStage(3), 2500),  // Stage 3: Tagline
-      setTimeout(() => finishIntro(), 4000) // End: Redirect
+      setTimeout(() => setStage(1), 200),   // 1. (0-200ms) Black to base-bg fade in (handled by wrapper)
+      setTimeout(() => setStage(2), 600),   // 2. (200-600ms) RAVEN mark fades/scales in with glow
+      setTimeout(() => setStage(3), 1000),  // 3. (600-1000ms) Wordmark draws in
+      setTimeout(() => setStage(4), 1600),  // 4. (1000-1600ms) Tagline fades in
+      setTimeout(() => setStage(5), 2200),  // 6. (2200-2600ms) Cross-fade transition starts
+      setTimeout(() => finishIntro(), 2600) // End
     ];
 
-    // Handle global keypress for skipping
     const handleKeyDown = () => finishIntro();
     window.addEventListener('keydown', handleKeyDown);
 
@@ -35,53 +34,53 @@ export default function Intro() {
     };
   }, []);
 
-  // Prevent flash of unstyled content or intro flash if already seen
   if (sessionStorage.getItem('raven_intro_seen')) {
     return null;
   }
 
   return (
     <div 
-      className="fixed inset-0 flex flex-col items-center justify-center bg-raven-bg-base cursor-pointer z-50 transition-colors duration-1000"
+      className={`fixed inset-0 flex flex-col items-center justify-center cursor-pointer z-50 transition-colors duration-200 ${stage === 0 ? 'bg-black' : 'bg-raven-bg-base'} ${stage >= 5 ? 'opacity-0 transition-opacity duration-400 ease-in-out' : 'opacity-100'}`}
       onClick={finishIntro}
       title="Click anywhere to skip"
     >
-      <div className="flex flex-col items-center text-center space-y-6">
+      <div className="relative flex flex-col items-center text-center space-y-6">
         
-        {/* Stage 1: Logo & Name */}
-        <div className={`transition-all duration-1000 transform ${stage >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="flex items-center gap-3 font-mono font-bold tracking-widest text-4xl">
-            <div className="relative flex h-12 w-12 items-center justify-center rounded bg-raven-bg-surface border border-raven-border-subtle shadow-[0_0_20px_rgba(61,220,151,0.2)]">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-raven-accent">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
-                <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
-                <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <span className="text-raven-text-primary">
-              RAVEN<span className="text-raven-accent">.</span>
-            </span>
+        {/* Ambient Glow */}
+        <div 
+          className={`absolute inset-0 -z-10 bg-raven-pulse/8 blur-[100px] pointer-events-none rounded-full w-[300px] h-[300px] -left-20 -top-20 transition-opacity duration-1000 ${stage >= 1 ? 'opacity-100' : 'opacity-0'}`} 
+        />
+        
+        <div className="flex items-center gap-3">
+          {/* Logo Mark */}
+          <div 
+            className={`relative flex h-12 w-12 items-center justify-center rounded bg-raven-bg-surface border border-raven-border-subtle shadow-[0_0_15px_rgba(110,86,245,0.15)] transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${stage >= 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
+          >
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-raven-pulse">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
+              <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
+              <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
+            </svg>
           </div>
+          
+          {/* Wordmark */}
+          <span 
+            className={`text-3xl font-bold tracking-[-0.02em] font-sans text-transparent bg-clip-text bg-raven-gradient drop-shadow-sm transition-all duration-400 ease-out ${stage >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+          >
+            RAVEN
+          </span>
         </div>
 
-        {/* Stage 2: Full Name */}
-        <div className={`transition-all duration-700 delay-100 ${stage >= 2 ? 'opacity-100' : 'opacity-0'}`}>
-          <p className="text-raven-text font-mono text-sm tracking-widest uppercase">
-            Ransomware Attack Visualization<br />and Event Navigator
-          </p>
+        {/* Tagline */}
+        <div 
+          className={`mt-4 text-sm tracking-wide text-raven-text-secondary transition-all duration-600 ease-out ${stage >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+        >
+          Intelligence System
         </div>
-
-        {/* Stage 3: Tagline */}
-        <div className={`transition-all duration-700 delay-100 ${stage >= 3 ? 'opacity-100' : 'opacity-0'}`}>
-          <p className="text-raven-text-primary text-xl font-light mt-4 italic">
-            "Trace the Attack. Measure the Impact."
-          </p>
-        </div>
-
       </div>
 
       {/* Skip Hint */}
-      <div className={`absolute bottom-8 text-raven-text/50 font-mono text-xs tracking-widest transition-opacity duration-1000 ${stage >= 1 ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`absolute bottom-8 text-raven-text-tertiary/50 font-mono text-xs tracking-widest transition-opacity duration-1000 ${stage >= 1 ? 'opacity-100' : 'opacity-0'}`}>
         [ Press any key or click to skip ]
       </div>
     </div>

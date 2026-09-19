@@ -7,6 +7,7 @@ import { Badge } from '../components/ui/Badge';
 import { investigationService } from '../services/investigationService';
 import type { Investigation, ActivityItem } from '../mock/investigations/mockData';
 import { LoadingState } from '../components/states/LoadingState';
+import { AnimatedCounter } from '../components/ui/AnimatedCounter';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -40,15 +41,21 @@ export default function Dashboard() {
     { label: 'Active Investigations', value: stats?.activeInvestigations, icon: FolderOpen, color: 'text-raven-text-primary' },
     { label: 'Critical Severity', value: stats?.criticalSeverity, icon: AlertCircle, color: 'text-raven-severity-critical' },
     { label: 'Recent Detections', value: stats?.recentDetections, icon: ShieldAlert, color: 'text-raven-severity-high' },
-    { label: 'Analyzed Sessions', value: stats?.analyzedSessions, icon: Activity, color: 'text-raven-accent' },
+    { label: 'Analyzed Sessions', value: stats?.analyzedSessions, icon: Activity, color: 'text-raven-pulse' },
   ];
 
   if (loading) {
     return <LoadingState message="Loading dashboard metrics..." />;
   }
 
+  // Calculate severity percentages for the stacked bar
+  const totalInv = statCards[0].value || 1; // avoid div by 0
+  const critPct = Math.round(((stats?.criticalSeverity || 0) / totalInv) * 100);
+  const highPct = Math.round(((stats?.recentDetections || 0) / totalInv) * 100); // just using mock data for demo
+  const medPct = 100 - critPct - highPct;
+
   return (
-    <div className="space-y-8 pb-8">
+    <div className="space-y-8 pb-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
       {/* Header & Quick Actions */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -66,15 +73,29 @@ export default function Dashboard() {
       </div>
 
       {/* Top Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {statCards.map((stat, i) => (
-          <Card key={i} className="flex flex-col justify-center">
+          <Card key={i} className={`flex flex-col justify-center ${i === 0 ? 'lg:col-span-2' : ''}`}>
             <div className="flex justify-between items-start">
-              <div>
+              <div className="flex-1">
                 <p className="text-xs font-medium text-raven-text-secondary uppercase tracking-wider mb-1">{stat.label}</p>
-                <p className={`text-3xl font-mono font-bold ${stat.color}`}>{stat.value}</p>
+                <p className={`text-3xl font-mono font-bold ${stat.color}`}>
+                  {stat.value !== undefined ? <AnimatedCounter value={stat.value} /> : '-'}
+                </p>
+                
+                {/* Specific addition: Severity Stacked Bar for the main card */}
+                {i === 0 && (
+                  <div className="mt-4 pt-4 border-t border-raven-border-subtle">
+                    <p className="text-[10px] text-raven-text-tertiary uppercase tracking-wider mb-2">Severity Distribution</p>
+                    <div className="flex h-1.5 w-full rounded-full overflow-hidden bg-raven-bg-surface-3">
+                      <div className="bg-raven-severity-critical" style={{ width: `${critPct}%` }} title={`Critical: ${critPct}%`} />
+                      <div className="bg-raven-severity-high" style={{ width: `${highPct}%` }} title={`High: ${highPct}%`} />
+                      <div className="bg-raven-severity-medium" style={{ width: `${medPct}%` }} title={`Medium: ${medPct}%`} />
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="p-2 bg-raven-bg-surface-2 rounded-md border border-raven-border-subtle">
+              <div className="p-2 bg-raven-bg-surface-2 rounded-md border border-raven-border-subtle ml-4 shrink-0">
                 <stat.icon size={20} className="text-raven-text-tertiary" />
               </div>
             </div>
@@ -105,7 +126,7 @@ export default function Dashboard() {
                 </thead>
                 <tbody className="divide-y divide-raven-border-subtle">
                   {investigations.map(inv => (
-                    <tr key={inv.id} className="hover:bg-raven-bg-surface-2/50 transition-colors cursor-pointer group" onClick={() => navigate('/investigations')}>
+                    <tr key={inv.id} className="hover:bg-raven-bg-surface-2/50 transition-all duration-150 cursor-pointer group animate-in fade-in slide-in-from-bottom-2" onClick={() => navigate('/investigations')}>
                       <td className="px-5 py-3">
                         <div className="font-mono text-raven-text-secondary group-hover:text-raven-accent transition-colors mb-0.5">{inv.id}</div>
                         <div className="font-medium text-raven-text-primary truncate max-w-[280px] sm:max-w-md">{inv.title}</div>

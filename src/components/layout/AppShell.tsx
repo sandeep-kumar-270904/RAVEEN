@@ -58,7 +58,7 @@ export function AppShell() {
         <Topbar onMenuClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
         
         <main className="flex-1 overflow-auto bg-raven-bg-base p-4 md:p-6">
-          <div className="mx-auto max-w-[1440px]">
+          <div key={location.pathname} className="mx-auto max-w-[1440px] animate-in fade-in slide-in-from-bottom-1 duration-200 ease-out">
             <Outlet />
           </div>
         </main>

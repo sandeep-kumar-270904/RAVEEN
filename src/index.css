@@ -12,7 +12,17 @@
   }
 
   button, input, select, textarea, a {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-raven-accent focus-visible:ring-offset-2 focus-visible:ring-offset-raven-bg-base transition-shadow;
+    outline: none !important;
+  }
+
+  button:focus-visible, 
+  input:focus-visible, 
+  select:focus-visible, 
+  textarea:focus-visible, 
+  a:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 2px theme('colors.raven.pulse') !important;
+    transition: box-shadow 100ms ease-in-out !important;
   }
 }
 

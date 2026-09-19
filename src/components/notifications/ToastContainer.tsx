@@ -31,7 +31,7 @@ export function ToastContainer({ notifications, removeNotification }: ToastConta
       {notifications.map(n => (
         <div 
           key={n.id} 
-          className={`pointer-events-auto bg-raven-bg-surface-2 border ${getBorderColor(n.type)} rounded-md shadow-lg p-4 min-w-[300px] max-w-md animate-in slide-in-from-right-8 fade-in duration-300`}
+          className={`pointer-events-auto bg-raven-bg-surface-2 border ${getBorderColor(n.type)} rounded-md shadow-premium-float p-4 min-w-[300px] max-w-md animate-in slide-in-from-right-8 fade-in duration-300`}
         >
           <div className="flex items-start gap-3">
             <div className="mt-0.5 shrink-0">{getIcon(n.type)}</div>

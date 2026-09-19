@@ -18,7 +18,11 @@ export default {
           'text-secondary': '#AAB5C2', // Was 9AA5B4
           'text-tertiary': '#79889C', // Was 626E7F, now passes 4.5:1 against bg-base
           'text-inverse': '#0A0E14',
-          accent: '#3DDC97',
+          signal: '#3DDC97',
+          'signal-hover': '#4EE8A6',
+          pulse: '#6E56F5',
+          'pulse-hover': '#7D68F7',
+          accent: '#3DDC97', // kept for backwards compatibility during migration
           'accent-hover': '#4EE8A6',
           'accent-muted': '#1C3A2E',
           'severity-critical': '#E5484D',
@@ -41,6 +45,12 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
+      },
+      backgroundImage: {
+        'raven-gradient': 'linear-gradient(135deg, #6E56F5 0%, #3DDC97 100%)',
+      },
+      boxShadow: {
+        'premium-float': '0 24px 48px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(35,43,56,0.5)',
       }
     },
   },
