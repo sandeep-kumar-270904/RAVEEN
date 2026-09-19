@@ -27,5 +27,9 @@ export const authService = {
         }
       }, 1000);
     });
+  },
+
+  logout: async (): Promise<void> => {
+    return new Promise((resolve) => setTimeout(resolve, 200));
   }
 };
