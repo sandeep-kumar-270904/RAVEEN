@@ -11,6 +11,7 @@ import ReconstructionTab from './Reconstruction';
 import TimelineTab from './Timeline';
 import ImpactTab from './Impact';
 import RARFTab from './RARF';
+import ReportTab from './Report';
 
 const TABS = [
   'Overview',
@@ -153,8 +154,12 @@ export default function InvestigationDetail() {
         {activeTab === 'RARF Data' && (
           <RARFTab investigationId={inv.id} />
         )}
+
+        {activeTab === 'Report' && (
+          <ReportTab investigationId={inv.id} />
+        )}
         
-        {activeTab !== 'Overview' && activeTab !== 'Evidence' && activeTab !== 'Reconstruction' && activeTab !== 'Timeline' && activeTab !== 'Impact Analysis' && activeTab !== 'RARF Data' && (
+        {activeTab !== 'Overview' && activeTab !== 'Evidence' && activeTab !== 'Reconstruction' && activeTab !== 'Timeline' && activeTab !== 'Impact Analysis' && activeTab !== 'RARF Data' && activeTab !== 'Report' && (
           <div className="mt-8 border border-dashed border-raven-border-strong rounded-lg p-12 bg-raven-bg-surface/50 text-center">
             <Placeholder title={activeTab} />
             <p className="mt-2 text-sm text-raven-text-tertiary">This module is scheduled for a future development phase.</p>
