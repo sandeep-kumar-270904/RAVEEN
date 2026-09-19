@@ -6,6 +6,7 @@ import { Badge } from '../../components/ui/Badge';
 import { Card } from '../../components/ui/Card';
 import type { Investigation } from '../../mock/investigations/mockData';
 import Placeholder from '../Placeholder';
+import EvidenceTab from './Evidence';
 
 const TABS = [
   'Overview',
@@ -129,7 +130,11 @@ export default function InvestigationDetail() {
           </div>
         )}
         
-        {activeTab !== 'Overview' && (
+        {activeTab === 'Evidence' && (
+          <EvidenceTab investigationId={inv.id} />
+        )}
+        
+        {activeTab !== 'Overview' && activeTab !== 'Evidence' && (
           <div className="mt-8 border border-dashed border-raven-border-strong rounded-lg p-12 bg-raven-bg-surface/50 text-center">
             <Placeholder title={activeTab} />
             <p className="mt-2 text-sm text-raven-text-tertiary">This module is scheduled for a future development phase.</p>

@@ -20,6 +20,7 @@ export function useAuth() {
   const logout = () => {
     sessionStorage.removeItem('raven_token');
     setIsAuthenticated(false);
+    window.location.href = '/login';
   };
 
   return { isAuthenticated, loading, setAuth, logout };

@@ -15,10 +15,6 @@ export default function InvestigationList() {
   const [search, setSearch] = useState('');
   const [severityFilter, setSeverityFilter] = useState<Severity | 'all'>('all');
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
   const loadData = async () => {
     setLoading(true);
     try {
@@ -30,6 +26,10 @@ export default function InvestigationList() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const filtered = investigations.filter(inv => {
     const matchesSearch = inv.id.toLowerCase().includes(search.toLowerCase()) || 
