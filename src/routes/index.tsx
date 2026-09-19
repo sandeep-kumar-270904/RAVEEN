@@ -3,6 +3,7 @@ import Intro from '../pages/Intro';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Dashboard from '../pages/Dashboard';
+import { ProtectedRoute } from './ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
@@ -18,7 +19,12 @@ export const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: '/dashboard',
-    element: <Dashboard />,
-  },
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: '/dashboard',
+        element: <Dashboard />,
+      }
+    ]
+  }
 ]);
