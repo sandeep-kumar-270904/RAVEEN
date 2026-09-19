@@ -7,6 +7,8 @@ import { impactService } from '../../services/impactService';
 import { rarfService } from '../../services/rarfService';
 import { evidenceService } from '../../services/evidenceService';
 
+import { narrativeService } from '../../services/narrativeService';
+
 import { ReportSection } from '../../components/report/ReportSection';
 import { ExecutiveSummary } from '../../components/report/ExecutiveSummary';
 import { Timeline } from '../../components/timeline/Timeline';
@@ -16,6 +18,7 @@ import { ImpactCategoryCard } from '../../components/impact/ImpactCategoryCard';
 import { EvidenceList } from '../../components/evidence/EvidenceList';
 import { RARFViewer } from '../../components/rarf/RARFViewer';
 import { Button } from '../../components/ui/Button';
+import { NarrativeStatement } from '../../components/narrative/NarrativeStatement';
 
 export default function ReportTab({ investigationId }: { investigationId: string }) {
   const [data, setData] = useState<any>(null);
@@ -30,17 +33,19 @@ export default function ReportTab({ investigationId }: { investigationId: string
         reconstruction,
         impact,
         rarf,
-        evidence
+        evidence,
+        narrative
       ] = await Promise.all([
         investigationService.getInvestigation(investigationId),
         timelineService.getTimelineForInvestigation(investigationId),
         reconstructionService.getReconstructionSession(investigationId),
         impactService.getImpactForInvestigation(investigationId),
         rarfService.getRARFDocument(investigationId),
-        evidenceService.getEvidenceForInvestigation(investigationId)
+        evidenceService.getEvidenceForInvestigation(investigationId),
+        narrativeService.getNarrativeForInvestigation(investigationId)
       ]);
 
-      setData({ inv, timeline, reconstruction, impact, rarf, evidence });
+      setData({ inv, timeline, reconstruction, impact, rarf, evidence, narrative });
       setLoading(false);
     }
     fetchAll();
@@ -87,16 +92,20 @@ export default function ReportTab({ investigationId }: { investigationId: string
 
         {/* 2. What Happened? */}
         <ReportSection title="2. What Happened?">
-          <p className="leading-relaxed">
-            Based on the correlated evidence, a highly privileged service account was compromised and utilized to deploy ransomware across the network. The incident resulted in the encryption of core file shares and required active intervention to contain outbound C2 beaconing.
-          </p>
+          <div className="leading-relaxed">
+            {data.narrative?.sections.find((s: any) => s.title === 'What Happened?')?.statements.map((stmt: any) => (
+              <NarrativeStatement key={stmt.id} statement={stmt} />
+            )) || <p className="italic text-raven-text-tertiary">Narrative pending.</p>}
+          </div>
         </ReportSection>
 
         {/* 3. How Did It Happen? */}
         <ReportSection title="3. How Did It Happen?">
-          <p className="leading-relaxed">
-            Initial access vector remains unconfirmed, but evidence strongly points to credential theft or an exposed RDP session. Following initial access, the actor utilized legitimate administrative tools (`vssadmin.exe`) to disable recovery options before executing the primary encryption payload via batch scripts in temporary directories.
-          </p>
+          <div className="leading-relaxed">
+            {data.narrative?.sections.find((s: any) => s.title === 'How Did It Happen?')?.statements.map((stmt: any) => (
+              <NarrativeStatement key={stmt.id} statement={stmt} />
+            )) || <p className="italic text-raven-text-tertiary">Narrative pending.</p>}
+          </div>
         </ReportSection>
 
         {/* 4. Attack Timeline */}
