@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { DropZone } from '../../components/evidence/DropZone';
 import { EvidenceList } from '../../components/evidence/EvidenceList';
 import { evidenceService } from '../../services/evidenceService';
+import { useNotification } from '../../contexts/NotificationContext';
+import { LoadingState } from '../../components/states/LoadingState';
 import type { EvidenceRecord } from '../../mock/evidence/mockData';
 
 interface EvidenceProps {
@@ -11,6 +13,7 @@ interface EvidenceProps {
 export default function EvidenceTab({ investigationId }: EvidenceProps) {
   const [records, setRecords] = useState<EvidenceRecord[]>([]);
   const [loading, setLoading] = useState(true);
+  const { notify } = useNotification();
 
   useEffect(() => {
     loadEvidence();
@@ -28,9 +31,24 @@ export default function EvidenceTab({ investigationId }: EvidenceProps) {
       // Start upload for each file
       evidenceService.uploadEvidence(investigationId, file, (updatedRecord) => {
         setRecords(prev => {
-          // Replace if exists, else prepend
-          const exists = prev.find(r => r.id === updatedRecord.id);
-          if (exists) {
+          // Check for transitions to fire notifications
+          const existing = prev.find(r => r.id === updatedRecord.id);
+          
+          if (updatedRecord.status === 'complete' && existing?.status !== 'complete') {
+            notify({
+              type: 'success',
+              title: 'Upload Complete',
+              message: `${updatedRecord.filename} processed successfully.`
+            });
+          } else if (updatedRecord.status === 'failed' && existing?.status !== 'failed') {
+            notify({
+              type: 'error',
+              title: 'Upload Failed',
+              message: `${updatedRecord.filename} encountered an error.`
+            });
+          }
+
+          if (existing) {
             return prev.map(r => r.id === updatedRecord.id ? updatedRecord : r);
           }
           return [updatedRecord, ...prev];
@@ -40,10 +58,7 @@ export default function EvidenceTab({ investigationId }: EvidenceProps) {
   };
 
   if (loading) {
-    return <div className="animate-pulse space-y-4">
-      <div className="h-48 bg-raven-bg-surface-2 rounded-lg" />
-      <div className="h-20 bg-raven-bg-surface-2 rounded-lg" />
-    </div>;
+    return <LoadingState message="Loading evidence..." />;
   }
 
   return (

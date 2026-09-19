@@ -3,6 +3,8 @@ import { timelineService } from '../../services/timelineService';
 import { Timeline } from '../../components/timeline/Timeline';
 import type { TimelineEventRecord } from '../../mock/timeline/mockData';
 import { Clock } from 'lucide-react';
+import { LoadingState } from '../../components/states/LoadingState';
+import { EmptyState } from '../../components/states/EmptyState';
 
 interface TimelineTabProps {
   investigationId: string;
@@ -23,16 +25,16 @@ export default function TimelineTab({ investigationId }: TimelineTabProps) {
   }, [investigationId]);
 
   if (loading) {
+    return <LoadingState message="Reconstructing timeline..." />;
+  }
+
+  if (events.length === 0) {
     return (
-      <div className="animate-pulse space-y-4 max-w-4xl">
-        <div className="h-10 bg-raven-bg-surface-2 rounded-md mb-8 max-w-md" />
-        {[1, 2, 3, 4].map(i => (
-          <div key={i} className="flex gap-4">
-            <div className="w-8 h-8 rounded-full bg-raven-bg-surface-2 shrink-0" />
-            <div className="flex-1 h-12 bg-raven-bg-surface-2 rounded-md mb-2" />
-          </div>
-        ))}
-      </div>
+      <EmptyState 
+        icon={<Clock size={48} />}
+        title="No Timeline Events"
+        description="No events have been correlated for this investigation yet."
+      />
     );
   }
 

@@ -6,6 +6,7 @@ import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { investigationService } from '../services/investigationService';
 import type { Investigation, ActivityItem } from '../mock/investigations/mockData';
+import { LoadingState } from '../components/states/LoadingState';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -43,18 +44,7 @@ export default function Dashboard() {
   ];
 
   if (loading) {
-    return (
-      <div className="space-y-8 animate-pulse">
-        <div className="h-10 bg-raven-bg-surface-2 w-48 rounded"></div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[1,2,3,4].map(i => <div key={i} className="h-28 bg-raven-bg-surface-2 rounded-md"></div>)}
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 h-96 bg-raven-bg-surface-2 rounded-md"></div>
-          <div className="h-96 bg-raven-bg-surface-2 rounded-md"></div>
-        </div>
-      </div>
-    );
+    return <LoadingState message="Loading dashboard metrics..." />;
   }
 
   return (

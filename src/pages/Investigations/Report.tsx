@@ -20,6 +20,9 @@ import { RARFViewer } from '../../components/rarf/RARFViewer';
 import { Button } from '../../components/ui/Button';
 import { NarrativeStatement } from '../../components/narrative/NarrativeStatement';
 
+import { LoadingState } from '../../components/states/LoadingState';
+import { ErrorState } from '../../components/states/ErrorState';
+
 export default function ReportTab({ investigationId }: { investigationId: string }) {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -52,16 +55,17 @@ export default function ReportTab({ investigationId }: { investigationId: string
   }, [investigationId]);
 
   if (loading) {
-    return (
-      <div className="animate-pulse space-y-8 max-w-5xl">
-        <div className="h-40 bg-raven-bg-surface-2 rounded-lg" />
-        <div className="h-64 bg-raven-bg-surface-2 rounded-lg" />
-        <div className="h-64 bg-raven-bg-surface-2 rounded-lg" />
-      </div>
-    );
+    return <LoadingState message="Compiling investigation report..." />;
   }
 
-  if (!data || !data.inv) return <div>Failed to load report data.</div>;
+  if (!data || !data.inv) {
+    return (
+      <ErrorState 
+        title="Failed to Load Report"
+        message="Could not retrieve the necessary data to compile this report."
+      />
+    );
+  }
 
   return (
     <div className="max-w-5xl bg-raven-bg-base text-raven-text-primary pb-20">

@@ -6,6 +6,7 @@ import { Button } from '../components/ui/Button';
 import { Logo } from '../components/Logo';
 import { authService } from '../services/authService';
 import { useAuth } from '../hooks/useAuth';
+import { useNotification } from '../contexts/NotificationContext';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -14,6 +15,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { setAuth } = useAuth();
+  const { notify } = useNotification();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +27,13 @@ export default function Login() {
       setAuth(res.token);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.message || 'Login failed');
+      const msg = err.message || 'Login failed';
+      setError(msg);
+      notify({
+        type: 'error',
+        title: 'Authentication Error',
+        message: msg
+      });
     } finally {
       setIsLoading(false);
     }

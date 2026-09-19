@@ -5,6 +5,8 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { Input } from '../../components/ui/Input';
+import { LoadingState } from '../../components/states/LoadingState';
+import { EmptyState } from '../../components/states/EmptyState';
 import { investigationService } from '../../services/investigationService';
 import type { Investigation, Severity } from '../../mock/investigations/mockData';
 
@@ -91,23 +93,18 @@ export default function InvestigationList() {
             </thead>
             <tbody className="divide-y divide-raven-border-subtle">
               {loading ? (
-                // Loading Skeleton
-                [1,2,3,4,5].map(i => (
-                  <tr key={i} className="animate-pulse">
-                    <td className="px-5 py-4">
-                      <div className="h-4 bg-raven-bg-surface-2 rounded w-24 mb-2"></div>
-                      <div className="h-4 bg-raven-bg-surface-2 rounded w-64"></div>
-                    </td>
-                    <td className="px-5 py-4"><div className="h-5 bg-raven-bg-surface-2 rounded w-16"></div></td>
-                    <td className="px-5 py-4"><div className="h-5 bg-raven-bg-surface-2 rounded w-20"></div></td>
-                    <td className="px-5 py-4"><div className="h-4 bg-raven-bg-surface-2 rounded w-24 ml-auto"></div></td>
-                  </tr>
-                ))
-              ) : filtered.length === 0 ? (
-                // Empty State
                 <tr>
-                  <td colSpan={4} className="px-5 py-12 text-center text-raven-text-tertiary">
-                    No investigations match your criteria.
+                  <td colSpan={4}>
+                    <LoadingState message="Fetching investigations..." />
+                  </td>
+                </tr>
+              ) : filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={4}>
+                    <EmptyState 
+                      title="No investigations found" 
+                      description="Try adjusting your search criteria or create a new investigation." 
+                    />
                   </td>
                 </tr>
               ) : (

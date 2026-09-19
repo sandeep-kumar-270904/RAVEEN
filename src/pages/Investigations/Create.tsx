@@ -5,10 +5,12 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { investigationService } from '../../services/investigationService';
+import { useNotification } from '../../contexts/NotificationContext';
 import type { Severity } from '../../mock/investigations/mockData';
 
 export default function InvestigationCreate() {
   const navigate = useNavigate();
+  const { notify } = useNotification();
   const [title, setTitle] = useState('');
   const [severity, setSeverity] = useState<Severity>('medium');
   const [loading, setLoading] = useState(false);
@@ -20,9 +22,19 @@ export default function InvestigationCreate() {
     setLoading(true);
     try {
       const newInv = await investigationService.createInvestigation(title, severity, 'SOC Analyst');
+      notify({
+        type: 'success',
+        title: 'Investigation Created',
+        message: `Case ${newInv.id} initialized successfully.`
+      });
       navigate(`/investigations/${newInv.id}`);
     } catch (err) {
       console.error(err);
+      notify({
+        type: 'error',
+        title: 'Creation Failed',
+        message: 'Could not initialize investigation.'
+      });
       setLoading(false);
     }
   };

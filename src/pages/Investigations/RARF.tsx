@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { rarfService } from '../../services/rarfService';
 import type { RARFDocument } from '../../types/rarf';
 import { RARFViewer } from '../../components/rarf/RARFViewer';
+import { LoadingState } from '../../components/states/LoadingState';
+import { EmptyState } from '../../components/states/EmptyState';
 import { FileJson } from 'lucide-react';
 
 interface RARFTabProps {
@@ -23,24 +25,16 @@ export default function RARFTab({ investigationId }: RARFTabProps) {
   }, [investigationId]);
 
   if (loading) {
-    return (
-      <div className="animate-pulse space-y-4 max-w-4xl">
-        <div className="h-24 bg-raven-bg-surface-2 rounded-lg mb-6" />
-        {[1, 2, 3, 4, 5].map(i => (
-          <div key={i} className="h-16 bg-raven-bg-surface-2 rounded-md" />
-        ))}
-      </div>
-    );
+    return <LoadingState message="Generating RARF Document..." />;
   }
 
   if (!document) {
     return (
-      <div className="text-center py-12 border-2 border-dashed border-raven-border-subtle rounded-lg max-w-4xl">
-        <FileJson size={32} className="mx-auto mb-4 text-raven-text-tertiary" />
-        <p className="text-raven-text-primary text-sm font-semibold">
-          No RARF Document generated for this investigation.
-        </p>
-      </div>
+      <EmptyState 
+        icon={<FileJson size={48} />}
+        title="No RARF Document Available"
+        description="A Risk & Response Framework document has not been generated for this investigation."
+      />
     );
   }
 

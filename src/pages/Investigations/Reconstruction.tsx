@@ -3,6 +3,9 @@ import { reconstructionService } from '../../services/reconstructionService';
 import type { AttackSession } from '../../mock/reconstruction/mockData';
 import { AttackStageCard } from '../../components/reconstruction/AttackStage';
 
+import { LoadingState } from '../../components/states/LoadingState';
+import { EmptyState } from '../../components/states/EmptyState';
+
 interface ReconstructionProps {
   investigationId: string;
 }
@@ -22,29 +25,15 @@ export default function ReconstructionTab({ investigationId }: ReconstructionPro
   }, [investigationId]);
 
   if (loading) {
-    return (
-      <div className="animate-pulse space-y-6 max-w-4xl">
-        <div className="h-20 bg-raven-bg-surface-2 rounded-lg mb-8" />
-        {[1, 2, 3].map(i => (
-          <div key={i} className="flex gap-6">
-            <div className="w-10 h-10 rounded-full bg-raven-bg-surface-2 shrink-0" />
-            <div className="flex-1 h-32 bg-raven-bg-surface-2 rounded-md" />
-          </div>
-        ))}
-      </div>
-    );
+    return <LoadingState message="Loading attack reconstruction..." />;
   }
 
   if (!session) {
     return (
-      <div className="text-center py-12 border-2 border-dashed border-raven-border-subtle rounded-lg max-w-4xl">
-        <p className="text-raven-text-tertiary text-sm">
-          No reconstruction data available for this investigation.
-        </p>
-        <p className="text-raven-text-secondary text-xs mt-2">
-          Evidence must be processed before reconstruction can begin.
-        </p>
-      </div>
+      <EmptyState 
+        title="No reconstruction data available"
+        description="Evidence must be processed before reconstruction can begin."
+      />
     );
   }
 

@@ -12,6 +12,8 @@ import TimelineTab from './Timeline';
 import ImpactTab from './Impact';
 import RARFTab from './RARF';
 import ReportTab from './Report';
+import { LoadingState } from '../../components/states/LoadingState';
+import { ErrorState } from '../../components/states/ErrorState';
 
 const TABS = [
   'Overview',
@@ -40,15 +42,25 @@ export default function InvestigationDetail() {
   }, [id]);
 
   if (loading) {
-    return <div className="text-raven-text-tertiary animate-pulse font-mono text-sm">Loading investigation data...</div>;
+    return <LoadingState message="Loading investigation workspace..." />;
   }
 
   if (!inv) {
     return (
-      <div className="text-center py-12">
-        <h2 className="text-xl text-raven-text-primary mb-2">Investigation Not Found</h2>
-        <p className="text-raven-text-secondary mb-6">No record exists with ID: {id}</p>
-        <button onClick={() => navigate('/investigations')} className="text-raven-accent hover:underline">Return to List</button>
+      <div className="max-w-2xl mx-auto mt-12">
+        <ErrorState 
+          title="Investigation Not Found"
+          message={`Could not find an investigation matching ID: ${id}`}
+        />
+        <div className="flex justify-center mt-6">
+          <button 
+            onClick={() => navigate('/investigations')}
+            className="flex items-center gap-2 text-sm text-raven-text-tertiary hover:text-raven-text-primary transition-colors"
+          >
+            <ChevronLeft size={16} />
+            Back to Investigations
+          </button>
+        </div>
       </div>
     );
   }
