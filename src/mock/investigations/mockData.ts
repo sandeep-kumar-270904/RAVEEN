@@ -8,6 +8,9 @@ export interface Investigation {
   severity: Severity;
   createdAt: string;
   analyst: string;
+  evidenceStatus?: string;
+  attackSessionStatus?: string;
+  reportStatus?: string;
 }
 
 export interface ActivityItem {
@@ -25,11 +28,11 @@ export const MOCK_STATS = {
 };
 
 export const MOCK_INVESTIGATIONS: Investigation[] = [
-  { id: 'INV-2023-0891', title: 'LockBit 3.0 Ransomware Activity on AD Server', status: 'pending', severity: 'critical', createdAt: '2023-10-24T08:14:00Z', analyst: 'Jane Doe' },
-  { id: 'INV-2023-0890', title: 'Suspicious PowerShell Execution (Invoke-Obfuscation)', status: 'pending', severity: 'high', createdAt: '2023-10-23T14:32:00Z', analyst: 'Jane Doe' },
-  { id: 'INV-2023-0889', title: 'Mass File Extension Change (.enc) on FileShare01', status: 'success', severity: 'critical', createdAt: '2023-10-21T09:05:00Z', analyst: 'John Smith' },
-  { id: 'INV-2023-0888', title: 'Unauthorized RDP Login from External IP', status: 'success', severity: 'medium', createdAt: '2023-10-20T11:22:00Z', analyst: 'System' },
-  { id: 'INV-2023-0887', title: 'Defender AV Service Stopped Unexpectedly', status: 'neutral', severity: 'low', createdAt: '2023-10-18T16:45:00Z', analyst: 'Jane Doe' },
+  { id: 'INV-2023-0891', title: 'LockBit 3.0 Ransomware Activity on AD Server', status: 'pending', severity: 'critical', createdAt: '2023-10-24T08:14:00Z', analyst: 'Jane Doe', evidenceStatus: 'Processing', attackSessionStatus: 'Active', reportStatus: 'Draft' },
+  { id: 'INV-2023-0890', title: 'Suspicious PowerShell Execution (Invoke-Obfuscation)', status: 'pending', severity: 'high', createdAt: '2023-10-23T14:32:00Z', analyst: 'Jane Doe', evidenceStatus: 'Pending Upload', attackSessionStatus: 'Identifying', reportStatus: 'Not Started' },
+  { id: 'INV-2023-0889', title: 'Mass File Extension Change (.enc) on FileShare01', status: 'success', severity: 'critical', createdAt: '2023-10-21T09:05:00Z', analyst: 'John Smith', evidenceStatus: 'Complete', attackSessionStatus: 'Reconstructed', reportStatus: 'Generated' },
+  { id: 'INV-2023-0888', title: 'Unauthorized RDP Login from External IP', status: 'success', severity: 'medium', createdAt: '2023-10-20T11:22:00Z', analyst: 'System', evidenceStatus: 'Complete', attackSessionStatus: 'Reconstructed', reportStatus: 'Generated' },
+  { id: 'INV-2023-0887', title: 'Defender AV Service Stopped Unexpectedly', status: 'neutral', severity: 'low', createdAt: '2023-10-18T16:45:00Z', analyst: 'Jane Doe', evidenceStatus: 'No Evidence', attackSessionStatus: 'None', reportStatus: 'Not Needed' },
 ];
 
 export const MOCK_ACTIVITY: ActivityItem[] = [

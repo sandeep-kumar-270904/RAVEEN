@@ -3,6 +3,9 @@ import Intro from '../pages/Intro';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Dashboard from '../pages/Dashboard';
+import InvestigationList from '../pages/Investigations/List';
+import InvestigationCreate from '../pages/Investigations/Create';
+import InvestigationDetail from '../pages/Investigations/Detail';
 import Placeholder from '../pages/Placeholder';
 import { ProtectedRoute } from './ProtectedRoute';
 import { AppShell } from '../components/layout/AppShell';
@@ -27,7 +30,9 @@ export const router = createBrowserRouter([
         element: <AppShell />,
         children: [
           { path: '/dashboard', element: <Dashboard /> },
-          { path: '/investigations', element: <Placeholder title="Investigations" /> },
+          { path: '/investigations', element: <InvestigationList /> },
+          { path: '/investigations/new', element: <InvestigationCreate /> },
+          { path: '/investigations/:id', element: <InvestigationDetail /> },
           { path: '/evidence', element: <Placeholder title="Evidence" /> },
           { path: '/reconstruction', element: <Placeholder title="Attack Reconstruction" /> },
           { path: '/timeline', element: <Placeholder title="Timeline" /> },
