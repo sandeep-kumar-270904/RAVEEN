@@ -39,9 +39,11 @@ export function TimelineEvent({ event, isLast }: { event: TimelineEventRecord; i
       <div className="flex-1 bg-raven-bg-surface border border-raven-border-subtle hover:border-raven-border-strong transition-colors rounded-md mb-4 overflow-hidden">
         
         {/* Header (Clickable for expand) */}
-        <div 
-          className="flex flex-col sm:flex-row sm:items-center justify-between p-3 cursor-pointer select-none"
+        <button 
+          className="w-full flex flex-col sm:flex-row sm:items-center justify-between p-3 cursor-pointer select-none text-left focus-visible:bg-raven-bg-surface-2"
           onClick={() => setExpanded(!expanded)}
+          aria-expanded={expanded}
+          aria-label={`Expand details for ${event.title}`}
         >
           <div className="flex items-center gap-3">
             <span className="font-mono text-xs text-raven-text-tertiary w-20 shrink-0">
@@ -61,11 +63,11 @@ export function TimelineEvent({ event, isLast }: { event: TimelineEventRecord; i
                 {event.evidenceRefs.length} ref{event.evidenceRefs.length !== 1 ? 's' : ''}
               </span>
             )}
-            <button className="text-raven-text-tertiary hover:text-raven-text-primary transition-colors p-1 rounded hover:bg-raven-bg-surface-2">
+            <div className="text-raven-text-tertiary transition-colors p-1 rounded group-hover:text-raven-text-primary">
               {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-            </button>
+            </div>
           </div>
-        </div>
+        </button>
 
         {/* Expanded Details */}
         {expanded && (

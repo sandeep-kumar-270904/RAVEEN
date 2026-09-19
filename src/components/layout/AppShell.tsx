@@ -57,7 +57,7 @@ export function AppShell() {
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         <Topbar onMenuClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
         
-        <main className="flex-1 overflow-auto bg-raven-bg-base p-6">
+        <main className="flex-1 overflow-auto bg-raven-bg-base p-4 md:p-6">
           <div className="mx-auto max-w-[1440px]">
             <Outlet />
           </div>

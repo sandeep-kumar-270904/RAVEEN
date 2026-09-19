@@ -26,7 +26,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {isPassword && (
             <button
               type="button"
-              className="absolute right-0 top-0 h-9 w-10 flex items-center justify-center text-raven-text-tertiary hover:text-raven-text-primary focus:outline-none"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              className="absolute right-0 top-0 h-9 w-10 flex items-center justify-center text-raven-text-tertiary hover:text-raven-text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-raven-accent rounded"
               onClick={() => setShowPassword(!showPassword)}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -42,6 +42,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
         (collapsed ? 'justify-center px-0 mx-2' : '')
       }
       title={collapsed ? item.label : undefined}
+      aria-label={item.label}
     >
       <item.icon className="h-[18px] w-[18px] shrink-0" />
       {!collapsed && <span className="text-sm font-medium truncate">{item.label}</span>}

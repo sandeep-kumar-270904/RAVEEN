@@ -10,6 +10,10 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold tracking-tight;
   }
+
+  button, input, select, textarea, a {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-raven-accent focus-visible:ring-offset-2 focus-visible:ring-offset-raven-bg-base transition-shadow;
+  }
 }
 
 @layer utilities {

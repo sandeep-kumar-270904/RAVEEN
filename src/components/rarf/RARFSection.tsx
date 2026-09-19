@@ -44,15 +44,16 @@ export function RARFSection({ title, data, defaultExpanded = true }: RARFSection
 
   return (
     <div className="border border-raven-border-subtle rounded-md bg-raven-bg-surface overflow-hidden">
-      <div 
-        className="flex items-center gap-2 p-3 bg-raven-bg-surface-2 cursor-pointer select-none hover:bg-raven-bg-surface-3 transition-colors"
+      <button 
+        className="w-full flex items-center gap-2 p-3 bg-raven-bg-surface-2 cursor-pointer select-none hover:bg-raven-bg-surface-3 transition-colors text-left focus-visible:bg-raven-bg-surface-3"
         onClick={() => setExpanded(!expanded)}
+        aria-expanded={expanded}
       >
-        <button className="text-raven-text-tertiary hover:text-raven-text-primary transition-colors">
+        <div className="text-raven-text-tertiary transition-colors">
           {expanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-        </button>
+        </div>
         <h3 className="font-semibold text-raven-text-primary">{formatKey(title)}</h3>
-      </div>
+      </button>
       
       {expanded && (
         <div className="p-4 border-t border-raven-border-subtle grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">

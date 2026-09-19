@@ -45,6 +45,7 @@ export default function InvestigationCreate() {
         <button 
           onClick={() => navigate('/investigations')}
           className="p-1 rounded text-raven-text-tertiary hover:text-raven-text-primary hover:bg-raven-bg-surface-2 transition-colors"
+          aria-label="Back to Investigations"
         >
           <ChevronLeft size={20} />
         </button>
@@ -57,8 +58,9 @@ export default function InvestigationCreate() {
       <Card>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-raven-text-secondary mb-1">Investigation Title</label>
+            <label htmlFor="title" className="block text-sm font-medium text-raven-text-secondary mb-1">Investigation Title</label>
             <Input 
+              id="title"
               placeholder="e.g. Unusual lateral movement on Subnet B" 
               value={title}
               onChange={e => setTitle(e.target.value)}
@@ -68,8 +70,9 @@ export default function InvestigationCreate() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-raven-text-secondary mb-1">Initial Severity</label>
+            <label htmlFor="severity" className="block text-sm font-medium text-raven-text-secondary mb-1">Initial Severity</label>
             <select 
+              id="severity"
               className="w-full h-9 px-3 rounded bg-raven-bg-surface-2 border border-raven-border-subtle text-raven-text-primary text-sm focus:outline-none focus:border-raven-accent cursor-pointer"
               value={severity}
               onChange={e => setSeverity(e.target.value as Severity)}

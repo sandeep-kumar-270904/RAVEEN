@@ -14,9 +14,9 @@ export default {
           'bg-surface-3': '#1D2430',
           'border-subtle': '#232B38',
           'border-strong': '#2E3847',
-          'text-primary': '#E6EAF0',
-          'text-secondary': '#9AA5B4',
-          'text-tertiary': '#626E7F',
+          'text-primary': '#F1F5F9', // Lightened slightly
+          'text-secondary': '#AAB5C2', // Was 9AA5B4
+          'text-tertiary': '#79889C', // Was 626E7F, now passes 4.5:1 against bg-base
           'text-inverse': '#0A0E14',
           accent: '#3DDC97',
           'accent-hover': '#4EE8A6',
@@ -29,7 +29,7 @@ export default {
           'status-success': '#3DDC97',
           'status-pending': '#E8C547',
           'status-error': '#E5484D',
-          'status-neutral': '#626E7F',
+          'status-neutral': '#79889C', // Was 626E7F
           'observed-bg': '#142A24',
           'observed-border': '#2A5C4A',
           'observed-text': '#3DDC97',

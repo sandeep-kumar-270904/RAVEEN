@@ -70,6 +70,7 @@ export default function InvestigationList() {
               className="h-9 pl-9 pr-8 rounded bg-raven-bg-surface-2 border border-raven-border-subtle text-raven-text-primary text-sm focus:outline-none focus:border-raven-accent appearance-none cursor-pointer"
               value={severityFilter}
               onChange={e => setSeverityFilter(e.target.value as Severity | 'all')}
+              aria-label="Filter by severity"
             >
               <option value="all">All Severities</option>
               <option value="critical">Critical</option>

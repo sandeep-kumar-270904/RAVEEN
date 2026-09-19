@@ -25,18 +25,18 @@ export function EvidenceTrace({ trace }: EvidenceTraceProps) {
         {/* Timeline Event Link */}
         {trace.timelineId && (
           <>
-            <div className="flex items-center gap-1.5 px-2 py-1 bg-raven-bg-surface-2 hover:bg-raven-bg-surface-3 transition-colors border border-raven-border-subtle rounded text-raven-text-primary cursor-pointer shrink-0">
+            <button className="flex items-center gap-1.5 px-2 py-1 bg-raven-bg-surface-2 hover:bg-raven-bg-surface-3 transition-colors border border-raven-border-subtle rounded text-raven-text-primary cursor-pointer shrink-0 focus-visible:ring-2 focus-visible:ring-raven-accent focus-visible:outline-none">
               <span className="font-mono text-xs">{trace.timelineId}</span>
-            </div>
+            </button>
             <ArrowRight size={14} className="text-raven-text-tertiary shrink-0" />
           </>
         )}
         
         {/* Original Evidence Link */}
-        <div className="flex items-center gap-1.5 px-2 py-1 bg-raven-bg-surface-2 hover:bg-raven-bg-surface-3 transition-colors border border-raven-border-subtle rounded text-raven-text-primary cursor-pointer shrink-0">
+        <button className="flex items-center gap-1.5 px-2 py-1 bg-raven-bg-surface-2 hover:bg-raven-bg-surface-3 transition-colors border border-raven-border-subtle rounded text-raven-text-primary cursor-pointer shrink-0 focus-visible:ring-2 focus-visible:ring-raven-accent focus-visible:outline-none">
           <FileText size={12} className="text-raven-text-tertiary" />
           <span className="font-mono text-xs">{trace.evidenceId}</span>
-        </div>
+        </button>
 
       </div>
       

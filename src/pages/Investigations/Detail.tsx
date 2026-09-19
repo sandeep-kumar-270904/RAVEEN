@@ -70,7 +70,11 @@ export default function InvestigationDetail() {
       {/* Header */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2">
-          <button onClick={() => navigate('/investigations')} className="p-1 rounded text-raven-text-tertiary hover:text-raven-text-primary hover:bg-raven-bg-surface-2 transition-colors">
+          <button 
+            onClick={() => navigate('/investigations')} 
+            className="p-1 rounded text-raven-text-tertiary hover:text-raven-text-primary hover:bg-raven-bg-surface-2 transition-colors"
+            aria-label="Back to Investigations"
+          >
             <ChevronLeft size={20} />
           </button>
           <span className="font-mono text-sm text-raven-text-secondary tracking-wider">{inv.id}</span>
