@@ -9,6 +9,7 @@ import Placeholder from '../Placeholder';
 import EvidenceTab from './Evidence';
 import ReconstructionTab from './Reconstruction';
 import TimelineTab from './Timeline';
+import ImpactTab from './Impact';
 
 const TABS = [
   'Overview',
@@ -143,8 +144,12 @@ export default function InvestigationDetail() {
         {activeTab === 'Timeline' && (
           <TimelineTab investigationId={inv.id} />
         )}
+
+        {activeTab === 'Impact Analysis' && (
+          <ImpactTab investigationId={inv.id} />
+        )}
         
-        {activeTab !== 'Overview' && activeTab !== 'Evidence' && activeTab !== 'Reconstruction' && activeTab !== 'Timeline' && (
+        {activeTab !== 'Overview' && activeTab !== 'Evidence' && activeTab !== 'Reconstruction' && activeTab !== 'Timeline' && activeTab !== 'Impact Analysis' && (
           <div className="mt-8 border border-dashed border-raven-border-strong rounded-lg p-12 bg-raven-bg-surface/50 text-center">
             <Placeholder title={activeTab} />
             <p className="mt-2 text-sm text-raven-text-tertiary">This module is scheduled for a future development phase.</p>
