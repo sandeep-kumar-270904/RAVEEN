@@ -2,24 +2,32 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
-  Search, 
-  ShieldAlert, 
+  Briefcase, 
+  Database, 
+  GitMerge, 
+  Clock, 
+  Activity, 
+  FileJson, 
   FileText, 
-  Settings,
-  HelpCircle 
+  Settings, 
+  UserCircle 
 } from 'lucide-react';
 import { Logo } from '../Logo';
 
 const NAV_ITEMS = [
-  { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { path: '/investigations', label: 'Investigations', icon: ShieldAlert },
-  { path: '/hunting', label: 'Threat Hunting', icon: Search },
-  { path: '/reports', label: 'Reports', icon: FileText },
+  { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+  { label: 'Investigations', path: '/investigations', icon: Briefcase },
+  { label: 'Evidence', path: '/evidence', icon: Database },
+  { label: 'Attack Reconstruction', path: '/reconstruction', icon: GitMerge },
+  { label: 'Timeline', path: '/timeline', icon: Clock },
+  { label: 'Impact Analysis', path: '/impact', icon: Activity },
+  { label: 'RARF Viewer', path: '/rarf', icon: FileJson },
+  { label: 'Reports', path: '/reports', icon: FileText },
 ];
 
 const BOTTOM_NAV_ITEMS = [
-  { path: '/settings', label: 'Settings', icon: Settings },
-  { path: '/help', label: 'Help & Support', icon: HelpCircle },
+  { label: 'Settings', path: '/settings', icon: Settings },
+  { label: 'Analyst Profile', path: '/profile', icon: UserCircle },
 ];
 
 export function Sidebar({ collapsed }: { collapsed: boolean }) {
